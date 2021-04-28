@@ -1,0 +1,28 @@
+---
+# tasks file for users
+- name: create sysadmin group
+  group:
+    name: "{{ group }}"
+    state: present
+    gid: "{{ giid }}"
+- name: add admin users
+  user:
+    comment: "{{ item.name }}"
+    name: "{{ item.id }}"
+    uid: "{{ item.uid }}"
+    password: "{{ 'Sunam#45{+*03' | password_hash('sha512') }}"
+    shell: /bin/bash
+    group: "{{ group }}"
+    state: present
+    system: no
+    createhome: yes
+    home: '/home/{{ item.id }}'
+  with_items: '{{ usersd }}'
+- name: add sudoers archive
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/{{ item.id }}_user
+    group: root
+    owner: root
+    mode: 0760
+  with_items: '{{ usersd }}'

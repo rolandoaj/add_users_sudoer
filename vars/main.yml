@@ -1,0 +1,9 @@
+---
+# vars file for users
+group: sysadmin
+giid: 700
+passwd: Sunam2021
+usersd:
+- { name: 'Rolando Antonio', id: 'n314210', uid: '750' }
+- { name: 'Cosme Fulanito', id: 'n456585', uid: '751' }
+
